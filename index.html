@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>王硕 | SLAM 求职网页简历</title>
+  <meta name="description" content="王硕的 SLAM 求职网页简历，聚焦多传感融合定位、先验引导建图、动态分离、变化检测与长期地图维护更新。" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{
+      --bg:#07111f;
+      --bg-soft:#0b1630;
+      --panel:rgba(11,22,48,.72);
+      --panel-strong:#0c1935;
+      --border:rgba(125,211,252,.14);
+      --text:#e6f0ff;
+      --muted:#9eb0d0;
+      --accent:#7dd3fc;
+      --accent-2:#a78bfa;
+      --accent-3:#34d399;
+      --danger:#fb7185;
+      --warning:#fbbf24;
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:22px;
+      --content:1200px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(125,211,252,.13), transparent 22%),
+        radial-gradient(circle at 85% 18%, rgba(167,139,250,.15), transparent 25%),
+        linear-gradient(180deg, #07111f 0%, #08101c 45%, #060b14 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.52), transparent 92%);
+      pointer-events:none;
+      z-index:-2;
+    }
+    .blob{
+      position:fixed;
+      border-radius:999px;
+      filter: blur(70px);
+      opacity:.16;
+      z-index:-1;
+      pointer-events:none;
+      animation: float 16s ease-in-out infinite;
+    }
+    .blob.one{width:240px;height:240px; left:-30px; top:12vh; background:#38bdf8;}
+    .blob.two{width:260px;height:260px; right:-60px; top:34vh; background:#8b5cf6; animation-delay:-6s;}
+    .blob.three{width:200px;height:200px; left:18vw; bottom:6vh; background:#10b981; animation-delay:-10s;}
+    @keyframes float{
+      0%,100%{transform:translateY(0) translateX(0)}
+      50%{transform:translateY(-16px) translateX(10px)}
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(16px);
+      background:rgba(7,17,31,.7);
+      border-bottom:1px solid rgba(255,255,255,.05);
+    }
+    .topbar-inner{
+      max-width:var(--content);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 20px;
+      gap:16px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-badge{
+      width:42px;height:42px;border-radius:14px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(125,211,252,.18), rgba(167,139,250,.20));
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:800;
+      color:#fff;
+      box-shadow: var(--shadow);
+    }
+    .brand-text strong{display:block;font-size:15px}
+    .brand-text span{display:block;font-size:12px;color:var(--muted)}
+    .nav{display:flex; flex-wrap:wrap; justify-content:flex-end; gap:10px}
+    .nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      transition:.25s ease;
+    }
+    .nav a:hover{color:var(--text); background:rgba(255,255,255,.05)}
+
+    main{max-width:var(--content); margin:0 auto; padding:28px 20px 80px}
+    section{margin-top:26px}
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .hero{display:grid;grid-template-columns:1.35fr .85fr;gap:20px;align-items:stretch}
+    .hero-main{padding:34px;position:relative;overflow:hidden}
+    .hero-main::after{
+      content:"";
+      position:absolute;
+      inset:auto -40px -60px auto;
+      width:280px;height:280px;
+      background:radial-gradient(circle, rgba(125,211,252,.16), transparent 65%);
+      pointer-events:none;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+      color:var(--accent);padding:8px 12px;border-radius:999px;background:rgba(125,211,252,.08);
+      border:1px solid rgba(125,211,252,.16);
+    }
+    h1{margin:16px 0 10px;font-size: clamp(34px, 7vw, 58px);line-height:1.04;letter-spacing:-.03em}
+    .hero-sub{font-size: clamp(18px, 2.3vw, 24px);color:#dbe7ff;margin:0 0 18px;line-height:1.5;max-width:21em}
+    .hero-desc{color:var(--muted);line-height:1.85;font-size:15px;max-width:58em}
+    .chip-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+    .chip{
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#dce7fb;
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+    }
+    .hero-actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:22px}
+    .btn{appearance:none; border:none; cursor:pointer; padding:13px 18px; border-radius:14px; font-weight:700;
+      font-size:14px; transition:.25s ease; text-decoration:none; display:inline-flex; align-items:center; gap:10px;}
+    .btn-primary{background:linear-gradient(135deg, var(--accent), #60a5fa); color:#04111e}
+    .btn-secondary{background:rgba(255,255,255,.04); color:var(--text); border:1px solid rgba(255,255,255,.08)}
+    .btn:hover{transform:translateY(-1px)}
+
+    .hero-side{display:grid;gap:20px}
+    .stats{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .stat{padding:18px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.08)}
+    .stat .value{font-size:28px;font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+    .stat .label{color:var(--muted);font-size:13px;line-height:1.5}
+    .mini-card{padding:22px 24px}
+    .mini-card h3{margin:0 0 10px;font-size:18px}
+    .mini-card p{margin:0;color:var(--muted);line-height:1.75;font-size:14px}
+
+    .section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}
+    .section-title h2{margin:0;font-size: clamp(26px, 4vw, 38px);letter-spacing:-.02em}
+    .section-title p{margin:0;max-width:46em;color:var(--muted);line-height:1.8;font-size:14px}
+
+    .card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .project-card{overflow:hidden;display:flex;flex-direction:column}
+    .project-media{height:228px;background:rgba(255,255,255,.03);overflow:hidden}
+    .project-media img,.project-media video{width:100%;height:100%;object-fit:cover;display:block}
+    .project-body{padding:20px 22px 24px}
+    .project-body h3{margin:0 0 10px;font-size:20px}
+    .project-body p{margin:0;color:var(--muted);line-height:1.78;font-size:14px}
+    .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+    .tag{font-size:12px;color:#dcf3ff;padding:8px 10px;border-radius:999px;border:1px solid rgba(125,211,252,.16);background:rgba(125,211,252,.08)}
+
+    .dashboard{padding:20px}
+    .tab-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+    .tab{appearance:none;border:none;background:rgba(255,255,255,.04);color:var(--muted);padding:12px 16px;border-radius:14px;cursor:pointer;font-weight:700;font-size:14px;border:1px solid rgba(255,255,255,.08);transition:.25s ease}
+    .tab.active,.tab:hover{color:#07111f;background:linear-gradient(135deg, var(--accent), #60a5fa)}
+    .dashboard-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:20px}
+    .chart-panel,.insights{padding:18px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+    .chart-head h3{margin:0 0 6px;font-size:22px}
+    .chart-head p{margin:0;color:var(--muted);line-height:1.75;font-size:14px}
+    .result-image-wrap{margin-top:16px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#050a12}
+    .result-image{display:block;width:100%;height:auto}
+    .result-caption{padding:12px 14px;color:var(--muted);font-size:13px;line-height:1.7;border-top:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.02)}
+    .insights{display:grid;align-content:start;gap:14px}
+    .insight{padding:16px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.06)}
+    .insight strong{display:block;margin-bottom:8px;font-size:14px}
+    .insight p{margin:0;color:var(--muted);line-height:1.75;font-size:14px}
+    .quick-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .quick-links a{font-size:13px;color:#dceeff;text-decoration:none;padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+
+    .scenario-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .scenario-card{overflow:hidden}
+    .scenario-card img{display:block;width:100%;height:280px;object-fit:cover}
+    .scenario-body{padding:18px 20px 22px}
+    .scenario-body h3{margin:0 0 8px;font-size:20px}
+    .scenario-body p{margin:0;color:var(--muted);font-size:14px;line-height:1.78}
+    .city-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .city{padding:8px 10px;border-radius:999px;background:rgba(52,211,153,.09);border:1px solid rgba(52,211,153,.16);font-size:12px;color:#dffcf2}
+
+    .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .video-card{padding:18px}
+    .video-card video{width:100%;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:#02060d;display:block}
+    .video-meta{margin-top:14px}
+    .video-meta h3{margin:0 0 8px;font-size:20px}
+    .video-meta p{margin:0;color:var(--muted);line-height:1.76;font-size:14px}
+
+    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .gallery-item{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;background:#09111e;border:1px solid rgba(255,255,255,.08);min-height:180px}
+    .gallery-item img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+    .gallery-item:hover img{transform:scale(1.04)}
+    .gallery-item span{position:absolute;left:12px;right:12px;bottom:12px;padding:10px 12px;border-radius:12px;background:rgba(7,17,31,.72);backdrop-filter:blur(10px);font-size:13px}
+
+    .resume-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}
+    .resume-card{padding:22px}
+    .resume-card h3{margin:0 0 14px;font-size:20px}
+    .resume-list{display:grid;gap:16px}
+    .resume-item{padding:16px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+    .resume-item .meta{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+    .resume-item h4{margin:0 0 8px;font-size:18px}
+    .resume-item p{margin:0;color:var(--muted);line-height:1.8;font-size:14px}
+    .skill-cloud{display:flex;flex-wrap:wrap;gap:10px}
+    .skill{padding:10px 12px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:13px;color:#ebf5ff}
+    .notice{margin-top:18px;padding:14px 16px;border-radius:16px;background:rgba(125,211,252,.08);border:1px solid rgba(125,211,252,.16);color:#dff6ff;line-height:1.8;font-size:14px}
+
+    .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .contact-card{padding:18px;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+    .contact-card strong{display:block;font-size:13px;color:var(--accent);margin-bottom:10px}
+    .contact-card span,.contact-card a{display:block;font-size:14px;color:#edf6ff;line-height:1.65;word-break:break-all;text-decoration:none}
+    .footer{margin-top:18px;color:var(--muted);font-size:13px;line-height:1.8}
+
+    .lightbox{position:fixed;inset:0;background:rgba(3,8,18,.86);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.25s ease;z-index:50;padding:24px}
+    .lightbox.open{opacity:1;pointer-events:auto}
+    .lightbox-inner{position:relative;max-width:min(1200px, 96vw);max-height:92vh}
+    .lightbox img{display:block;max-width:100%;max-height:92vh;border-radius:20px;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
+    .lightbox-close{position:absolute;top:-14px;right:-10px;width:40px;height:40px;border:none;border-radius:999px;cursor:pointer;font-size:24px;background:#fff;color:#09111e;box-shadow:var(--shadow)}
+
+    @media (max-width: 1100px){
+      .hero,.dashboard-grid,.resume-grid,.scenario-grid,.video-grid{grid-template-columns:1fr}
+      .card-grid{grid-template-columns:repeat(2,1fr)}
+      .gallery-grid{grid-template-columns:repeat(3,1fr)}
+      .contact-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width: 780px){
+      main{padding:20px 14px 60px}
+      .topbar-inner{padding:12px 14px}
+      .hero-main{padding:24px}
+      .stats{grid-template-columns:1fr 1fr;padding:18px}
+      .card-grid,.gallery-grid,.contact-grid{grid-template-columns:1fr}
+      .project-media{height:210px}
+      .scenario-card img{height:230px}
+      .section-title{flex-direction:column;align-items:flex-start}
+    }
+    @media (max-width: 560px){
+      .nav{display:none}
+      .stats{grid-template-columns:1fr}
+      .hero-actions{flex-direction:column;align-items:stretch}
+      .btn{justify-content:center}
+    }
+  </style>
+</head>
+<body>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="blob three"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">WS</div>
+        <div class="brand-text">
+          <strong>王硕 · Shuo Wang</strong>
+          <span>SLAM · 地图维护 · 变化检测</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#strengths">核心优势</a>
+        <a href="#projects">项目亮点</a>
+        <a href="#results">实验结果</a>
+        <a href="#scenarios">场景覆盖</a>
+        <a href="#videos">视频演示</a>
+        <a href="#contact">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="panel hero-main">
+        <span class="eyebrow">SLAM Resume • Robotics Perception</span>
+        <h1>王硕</h1>
+        <p class="hero-sub">面向无人平台自主感知的研究型工程师<br/>聚焦多传感融合定位、长期地图维护、变化检测与动态分离</p>
+        <p class="hero-desc">
+          面向无人平台长期运行任务，我的工作重点集中在两条主线：一是面向复杂环境与退化条件的多传感融合定位与建图，强调先验信息引导、全局一致性与复杂场景适应能力；二是面向长期运行的地图维护闭环，围绕动态目标分离、局部变化检测与增量式地图更新，提升地图在动态环境中的持续可用性。
+        </p>
+        <div class="chip-row">
+          <span class="chip">LiDAR / IMU / GNSS / Camera</span>
+          <span class="chip">LIO / Prior-guided Localization</span>
+          <span class="chip">Dynamic Object Removal</span>
+          <span class="chip">Change Detection</span>
+          <span class="chip">Incremental Map Update</span>
+          <span class="chip">UGV-UAV Cooperative Mapping</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">查看项目亮点</a>
+          <a class="btn btn-secondary" href="#videos">查看视频演示</a>
+          <a class="btn btn-secondary" href="https://github.com/MichealRW" target="_blank" rel="noreferrer">访问 GitHub</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="panel stats">
+          <div class="stat">
+            <div class="value counter" data-target="8">0</div>
+            <div class="label">覆盖城市与测试地区<br/>包头、酒泉、阿拉善、汨罗、长沙、孝感、北京、南京</div>
+          </div>
+          <div class="stat">
+            <div class="value counter" data-target="2">0</div>
+            <div class="label">核心能力主线<br/>SLAM 定位建图 / 长期地图维护更新</div>
+          </div>
+          <div class="stat">
+            <div class="value counter" data-target="3">0</div>
+            <div class="label">结构化能力闭环<br/>定位、动态分离、变化更新</div>
+          </div>
+          <div class="stat">
+            <div class="value counter" data-target="2">0</div>
+            <div class="label">内嵌演示视频<br/>定位演示 / 动态分离演示</div>
+          </div>
+        </div>
+
+        <div class="panel mini-card">
+          <h3>求职方向</h3>
+          <p>SLAM、机器人感知、多传感融合定位、三维地图构建、动态环境感知、长期地图维护、变化检测与更新等方向岗位。</p>
+        </div>
+
+        <div class="panel mini-card">
+          <h3>个人信息</h3>
+          <p>
+            邮箱：1972178768@qq.com<br/>
+            电话：19871938445<br/>
+            GitHub：<a href="https://github.com/MichealRW" target="_blank" rel="noreferrer" style="color:#dff5ff">https://github.com/MichealRW</a><br/>
+            机构：国防科技大学
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="strengths">
+      <div class="section-title">
+        <h2>核心优势</h2>
+        <p>相比只停留在单一算法模块，我更强调从定位建图到长期地图维护的系统闭环能力，适合面向真实无人平台应用的岗位场景。</p>
+      </div>
+      <div class="card-grid">
+        <article class="panel project-card">
+          <div class="project-body">
+            <h3>复杂环境下的 SLAM 系统能力</h3>
+            <p>围绕多传感融合定位与先验引导建图，面向 GNSS 退化、地形起伏、场景重复纹理与复杂工地场景，组织从地图级先验构建、在线检索到定位优化的完整链路。</p>
+            <div class="tags">
+              <span class="tag">Multi-Sensor Fusion</span>
+              <span class="tag">Global Consistency</span>
+              <span class="tag">Prior Retrieval</span>
+            </div>
+          </div>
+        </article>
+        <article class="panel project-card">
+          <div class="project-body">
+            <h3>动态环境中的长期地图维护</h3>
+            <p>将动态目标分离、局部子图组织、变化检测和增量式地图写回整合为统一框架，不仅关注定位精度，也关注地图在长期运行中的稳定维护和持续可用性。</p>
+            <div class="tags">
+              <span class="tag">Dynamic Removal</span>
+              <span class="tag">Submap Maintenance</span>
+              <span class="tag">Incremental Update</span>
+            </div>
+          </div>
+        </article>
+        <article class="panel project-card">
+          <div class="project-body">
+            <h3>真实场景驱动的验证与工程意识</h3>
+            <p>测试覆盖城市多车结构化场景、悬崖陡坡复杂非结构化场景与工地环境，结合多地区实测数据、可视化对比和视频演示，形成较完整的工程验证链路。</p>
+            <div class="tags">
+              <span class="tag">Urban / Off-road</span>
+              <span class="tag">Structured / Unstructured</span>
+              <span class="tag">Real-world Testing</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-title">
+        <h2>项目亮点</h2>
+        <p>以下内容按照求职表达方式重组，突出“做了什么、解决什么问题、体现了哪些能力”。</p>
+      </div>
+      <div class="card-grid">
+        <article class="panel project-card">
+          <div class="project-media">
+            <img src="./assets/f2-1-framework.webp" alt="先验引导建图与定位框架" />
+          </div>
+          <div class="project-body">
+            <h3>先验引导的多传感融合定位与建图</h3>
+            <p>构建面向地图级先验的感知框架，融合激光雷达、IMU、GNSS 以及航测信息，形成从全局先验表达、在线索引到局部感知调用的闭环，以提升复杂场景下的定位鲁棒性与建图质量。</p>
+            <div class="tags">
+              <span class="tag">DLM-LIO</span>
+              <span class="tag">LiDAR-Inertial</span>
+              <span class="tag">GNSS Degradation Robustness</span>
+              <span class="tag">Map Prior</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel project-card">
+          <div class="project-media">
+            <img src="./assets/f4-4-changedetection-framework.webp" alt="变化检测与长期地图维护框架" />
+          </div>
+          <div class="project-body">
+            <h3>长期地图维护、变化检测与增量更新</h3>
+            <p>围绕长期运行中的环境演变问题，利用局部子图、占据与高程信息组织变化检测，将新增变化、减量变化与动态目标分离结果统一汇入地图维护模块，实现低冗余的持续更新。</p>
+            <div class="tags">
+              <span class="tag">Change Detection</span>
+              <span class="tag">Occupancy + Elevation</span>
+              <span class="tag">Incremental Maintenance</span>
+              <span class="tag">Low-bandwidth Update</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel project-card">
+          <div class="project-media">
+            <img src="./assets/f4-1-evolution-framework.webp" alt="动态分离与环境演进感知框架" />
+          </div>
+          <div class="project-body">
+            <h3>动态分离与环境演进感知</h3>
+            <p>采用“点-栅格-点”思路组织动态目标分离，在保持静态环境一致性的同时，为后续变化检测和地图更新提供更干净的输入。该能力既服务于在线感知，也服务于长期地图维护。</p>
+            <div class="tags">
+              <span class="tag">Point-Grid-Point</span>
+              <span class="tag">Static Consistency</span>
+              <span class="tag">Map-level Dynamic Removal</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="results">
+      <div class="section-title">
+        <h2>实验结果</h2>
+        <p>通过可切换的结果面板，集中展示定位鲁棒性、建图质量、动态分离与变化检测等关键证据，适合面试中边讲边切换。</p>
+      </div>
+      <div class="panel dashboard">
+        <div class="tab-row" id="dashboardTabs"></div>
+        <div class="dashboard-grid">
+          <div class="chart-panel">
+            <div class="chart-head">
+              <h3 id="resultTitle">实验图示</h3>
+              <p id="resultDesc">选择不同标签查看结果。</p>
+            </div>
+            <div class="result-image-wrap">
+              <img id="resultImage" class="result-image" src="./assets/f2-18-slam-gps.webp" alt="实验结果图" />
+              <div id="resultCaption" class="result-caption">实验结果说明。</div>
+            </div>
+          </div>
+          <div class="insights">
+            <div id="insightPanel"></div>
+            <div>
+              <strong style="display:block;margin:0 0 10px;font-size:14px;color:var(--accent)">快速跳转</strong>
+              <div class="quick-links">
+                <a href="#videos">查看定位视频</a>
+                <a href="#videos">查看动态分离视频</a>
+                <a href="#scenarios">查看场景覆盖</a>
+                <a href="https://github.com/MichealRW" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="scenarios">
+      <div class="section-title">
+        <h2>场景覆盖与运行环境</h2>
+        <p>测试覆盖结构化与非结构化环境，包括城市道路、多车交通场景，以及悬崖、陡坡、土路、复杂工地等复杂环境，验证定位与地图维护方法在不同条件下的适应性。</p>
+      </div>
+      <div class="scenario-grid">
+        <article class="panel scenario-card">
+          <img src="./assets/f2-17-dataset-show.webp" alt="多地区实车测试场景" />
+          <div class="scenario-body">
+            <h3>实车数据采集与跨地域测试</h3>
+            <p>场景包含城市道路、矿区工地、土路与荒野环境，覆盖包头、酒泉、阿拉善、汨罗、长沙、孝感、北京、南京等多个城市与测试地区，为定位建图和长期地图维护提供了多样化验证基础。</p>
+            <div class="city-list">
+              <span class="city">包头</span><span class="city">酒泉</span><span class="city">阿拉善</span><span class="city">汨罗</span>
+              <span class="city">长沙</span><span class="city">孝感</span><span class="city">北京</span><span class="city">南京</span>
+            </div>
+          </div>
+        </article>
+        <article class="panel scenario-card">
+          <img src="./assets/f2-5-UAV.webp" alt="无人机航测先验地图" />
+          <div class="scenario-body">
+            <h3>空地协同先验与大范围环境表达</h3>
+            <p>利用无人机航测获得的大范围先验信息，与地面无人平台在线感知形成协同，为全局先验索引、场景理解以及长期地图维护提供基础支撑，也体现了我在多源地图表达方面的系统意识。</p>
+            <div class="city-list">
+              <span class="city">城市结构化场景</span>
+              <span class="city">多车交通环境</span>
+              <span class="city">悬崖/陡坡</span>
+              <span class="city">复杂非结构化场景</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="section-title">
+        <h2>视频演示</h2>
+        <p>页面内嵌两个演示视频，分别对应定位能力和动态分离性能，适合投递链接后直接展示，不需要额外跳转。</p>
+      </div>
+      <div class="video-grid">
+        <article class="panel video-card">
+          <video controls preload="metadata" poster="./assets/f2-19-map-compare.webp">
+            <source src="./assets/videos/locate-slam.mp4" type="video/mp4" />
+            当前浏览器不支持 video 标签。
+          </video>
+          <div class="video-meta">
+            <h3>定位与建图演示</h3>
+            <p>演示在复杂场景下的定位与建图效果，可与页面中的鲁棒性曲线、地图质量对比图配合讲述，突出系统在 GNSS 退化和复杂环境中的稳定性与一致性。</p>
+          </div>
+        </article>
+        <article class="panel video-card">
+          <video controls preload="metadata" poster="./assets/f4-10-eval-all-dataset.webp">
+            <source src="./assets/videos/PGP-DOR.mp4" type="video/mp4" />
+            当前浏览器不支持 video 标签。
+          </video>
+          <div class="video-meta">
+            <h3>动态分离与地图维护演示</h3>
+            <p>演示动态目标分离能力及其对地图维护的支撑作用，可结合变化检测与更新结果一起说明该方法不仅服务于当前感知，也面向长期运行中的地图质量维护。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="section-title">
+        <h2>图示索引</h2>
+        <p>保留若干适合网页浏览的关键图示，可点击放大查看，既可快速浏览，也可作为面试交流时的辅助材料。</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item" data-image="./assets/f2-1-framework.webp" data-title="先验引导定位与建图框架">
+          <img src="./assets/f2-1-framework.webp" alt="先验引导定位与建图框架" />
+          <span>先验引导定位与建图框架</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f2-18-slam-gps.webp" data-title="定位鲁棒性对比">
+          <img src="./assets/f2-18-slam-gps.webp" alt="定位鲁棒性对比" />
+          <span>定位鲁棒性对比</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f2-19-map-compare.webp" data-title="建图质量对比">
+          <img src="./assets/f2-19-map-compare.webp" alt="建图质量对比" />
+          <span>建图质量对比</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f4-1-evolution-framework.webp" data-title="环境演进感知框架">
+          <img src="./assets/f4-1-evolution-framework.webp" alt="环境演进感知框架" />
+          <span>环境演进感知框架</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f4-4-changedetection-framework.webp" data-title="变化检测与更新框架">
+          <img src="./assets/f4-4-changedetection-framework.webp" alt="变化检测与更新框架" />
+          <span>变化检测与更新框架</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f4-10-eval-all-dataset.webp" data-title="动态分离效果对比">
+          <img src="./assets/f4-10-eval-all-dataset.webp" alt="动态分离效果对比" />
+          <span>动态分离效果对比</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f4-15-changedetection-frame.webp" data-title="变化检测案例">
+          <img src="./assets/f4-15-changedetection-frame.webp" alt="变化检测案例" />
+          <span>变化检测案例</span>
+        </div>
+        <div class="gallery-item" data-image="./assets/f4-16-changedetection-map.webp" data-title="地图更新结果">
+          <img src="./assets/f4-16-changedetection-map.webp" alt="地图更新结果" />
+          <span>地图更新结果</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <div class="section-title">
+        <h2>履历与技术栈</h2>
+        <p>用于求职展示时，可以用这一部分快速给出教育背景、研究方向定位和技术关键词。</p>
+      </div>
+      <div class="resume-grid">
+        <div class="panel resume-card">
+          <h3>教育背景与研究定位</h3>
+          <div class="resume-list">
+            <div class="resume-item">
+              <div class="meta">教育背景</div>
+              <h4>国防科技大学 · 电子信息（人工智能方向）硕士</h4>
+              <p>研究工作围绕无人平台自主感知展开，重点覆盖多传感融合定位与建图、动态环境感知、变化检测以及长期地图维护更新。</p>
+            </div>
+            <div class="resume-item">
+              <div class="meta">求职定位</div>
+              <h4>SLAM / 机器人感知 / 长期地图维护方向</h4>
+              <p>适合投递机器人、自动驾驶、无人平台、三维感知、地图构建、地图维护与在线更新等岗位，能够从问题定义、系统设计到实验验证完整讲清技术工作。</p>
+            </div>
+            <div class="resume-item">
+              <div class="meta">工程特征</div>
+              <h4>强调系统闭环与真实环境验证</h4>
+              <p>不仅关注算法点结果，也关注先验调用、地图管理、动态分离、变化写回与视频演示等完整链路，具备较强的研究表达与工程落地意识。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel resume-card">
+          <h3>技术关键词</h3>
+          <div class="skill-cloud">
+            <span class="skill">SLAM / LIO</span>
+            <span class="skill">LiDAR Point Cloud</span>
+            <span class="skill">Multi-Sensor Fusion</span>
+            <span class="skill">GNSS / IMU</span>
+            <span class="skill">Prior-guided Localization</span>
+            <span class="skill">Map Maintenance</span>
+            <span class="skill">Dynamic Object Removal</span>
+            <span class="skill">Change Detection</span>
+            <span class="skill">Incremental Map Update</span>
+            <span class="skill">Occupancy / Elevation Modeling</span>
+            <span class="skill">BEV Representation</span>
+            <span class="skill">UGV-UAV Cooperative Mapping</span>
+          </div>
+          <div class="notice">
+            页面已采用纯静态实现，可直接部署到 GitHub Pages。对于求职使用，可以继续补充论文链接、竞赛经历、项目仓库、发表成果或下载 PDF 简历按钮。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-title">
+        <h2>联系</h2>
+        <p>以下信息已按你的要求更新，可直接用于公开部署版本。</p>
+      </div>
+      <div class="panel resume-card">
+        <div class="contact-grid">
+          <div class="contact-card">
+            <strong>姓名 / Name</strong>
+            <span>王硕 · Shuo Wang</span>
+          </div>
+          <div class="contact-card">
+            <strong>求职方向 / Focus</strong>
+            <span>SLAM、机器人感知、长期地图维护、变化检测与更新</span>
+          </div>
+          <div class="contact-card">
+            <strong>机构 / Affiliation</strong>
+            <span>国防科技大学</span>
+          </div>
+          <div class="contact-card">
+            <strong>邮箱 / Email</strong>
+            <a href="mailto:1972178768@qq.com">1972178768@qq.com</a>
+          </div>
+          <div class="contact-card">
+            <strong>电话 / Phone</strong>
+            <span>19871938445</span>
+          </div>
+          <div class="contact-card">
+            <strong>GitHub</strong>
+            <a href="https://github.com/MichealRW" target="_blank" rel="noreferrer">https://github.com/MichealRW</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        本页为纯静态实现，适合直接部署到 GitHub Pages、Vercel 或本地静态服务器。建议公开部署时保留当前相对路径结构，以确保图片与视频资源正常加载。
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="关闭">×</button>
+      <img id="lightboxImage" src="" alt="查看大图" />
+    </div>
+  </div>
+
+  <script>
+    const resultConfigs = [
+      {
+        label: '定位鲁棒性',
+        title: 'GNSS 退化条件下的定位鲁棒性对比',
+        desc: '在剧烈颠簸场景与起伏丘陵场景中，对比不同方法在 GPS 置信度下降时的均值误差与 RMS 误差变化。',
+        image: './assets/f2-18-slam-gps.webp',
+        caption: '图中展示了不同维度误差在 GPS 置信度变化下的趋势。目标方法在两类场景中均保持更稳定的误差表现，体现出更好的退化条件适应能力。',
+        insights: [
+          ['能体现的能力', '能够说明我不仅关注常规场景下的定位效果，也针对 GNSS 退化与复杂地形条件进行了专门设计与验证。'],
+          ['面试表达建议', '可以从“先验引导 + 多传感融合 + 全局一致性”的角度解释为何在复杂场景中表现更稳。'],
+          ['岗位匹配价值', '适合投递需要复杂环境定位、野外无人平台或具备退化感知需求的 SLAM / 机器人岗位。']
+        ]
+      },
+      {
+        label: '建图质量',
+        title: '复杂场景下的建图质量对比',
+        desc: '展示 KISS-ICP、FAST-LIO、FAST-LIVO2 与目标方法在城市道路、复杂工地、剧烈颠簸与起伏丘陵场景中的建图效果。',
+        image: './assets/f2-19-map-compare.webp',
+        caption: '图中可直观看到在复杂工地与剧烈颠簸场景下，不同方法的地图完整性与结构一致性差异。目标方法在整体质量与局部结构保持上表现更稳定。',
+        insights: [
+          ['能体现的能力', '体现出从定位到建图的一体化系统能力，而不仅是单点算法结果。'],
+          ['面试表达建议', '适合重点强调复杂非结构化场景、工地场景和地形起伏对 SLAM 系统的挑战，以及对应的系统设计。'],
+          ['岗位匹配价值', '对于强调实车建图、地图管理或工程部署能力的岗位，这类结果很有说服力。']
+        ]
+      },
+      {
+        label: '动态分离',
+        title: '地图级动态分离效果对比',
+        desc: '对比不同方法在典型场景中的动态目标分离结果，突出方法对静态主干结构的保持能力与动态目标剔除能力。',
+        image: './assets/f4-10-eval-all-dataset.webp',
+        caption: '对比 Ground Truth、目标方法与其他基线方法的结果，可看到目标方法在主干道路与边缘结构附近更好地保持静态环境一致性，并有效抑制动态干扰。',
+        insights: [
+          ['能体现的能力', '展示我在动态环境感知与地图清洁方面的能力，这直接支撑长期地图维护。'],
+          ['面试表达建议', '可以说明动态分离不是孤立模块，而是后续变化检测与更新的前置步骤。'],
+          ['岗位匹配价值', '适合面向自动驾驶、机器人感知、动态环境地图构建等岗位场景。']
+        ]
+      },
+      {
+        label: '变化检测',
+        title: '变化检测与长期地图维护实例',
+        desc: '展示车辆移动、电线杆移动、三角堆消失与新增障碍等变化检测案例，以及地图更新结果。',
+        image: './assets/f4-15-changedetection-frame.webp',
+        caption: '图中列出了多个典型变化案例，包括车辆移动、电线杆及护栏移动、物体消失和新增障碍等，说明系统能够识别不同类型的环境演变。',
+        insights: [
+          ['能体现的能力', '反映出我不仅能做动态分离，也能继续向变化检测、地图更新与长期维护延伸，形成完整闭环。'],
+          ['面试表达建议', '建议从“局部子图组织—变化判定—增量写回”三个步骤进行介绍。'],
+          ['岗位匹配价值', '非常适合强调长期运行地图维护、在线更新、低带宽传输等应用方向。']
+        ]
+      },
+      {
+        label: '地图更新',
+        title: '变化检测后的地图更新结果',
+        desc: '对比完整方案与无有效先验条件下的结果，展示地图更新效果与误检差异。',
+        image: './assets/f4-16-changedetection-map.webp',
+        caption: '图中可见完整方案在变化区域表达上更接近真值，而无有效先验条件下更容易出现误检与噪声干扰，说明先验信息对长期维护的价值。',
+        insights: [
+          ['能体现的能力', '说明我关注的不只是检测结果本身，还关注更新后的地图质量与维护效果。'],
+          ['面试表达建议', '适合用来总结“从定位建图到长期地图维护”的完整研究能力。'],
+          ['岗位匹配价值', '对于地图服务、机器人长期运行和在线更新方向岗位，这是很直接的亮点。']
+        ]
+      }
+    ];
+
+    const tabsEl = document.getElementById('dashboardTabs');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultDesc = document.getElementById('resultDesc');
+    const resultImage = document.getElementById('resultImage');
+    const resultCaption = document.getElementById('resultCaption');
+    const insightPanel = document.getElementById('insightPanel');
+    let activeConfig = resultConfigs[0];
+
+    function createTabs(){
+      resultConfigs.forEach((cfg, index) => {
+        const button = document.createElement('button');
+        button.className = 'tab' + (index === 0 ? ' active' : '');
+        button.textContent = cfg.label;
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+          button.classList.add('active');
+          activeConfig = cfg;
+          renderResult();
+        });
+        tabsEl.appendChild(button);
+      });
+    }
+
+    function renderResult(){
+      resultTitle.textContent = activeConfig.title;
+      resultDesc.textContent = activeConfig.desc;
+      resultImage.src = activeConfig.image;
+      resultImage.alt = activeConfig.title;
+      resultCaption.textContent = activeConfig.caption;
+      insightPanel.innerHTML = '';
+      activeConfig.insights.forEach(([title, text]) => {
+        const div = document.createElement('div');
+        div.className = 'insight';
+        div.innerHTML = '<strong>' + title + '</strong><p>' + text + '</p>';
+        insightPanel.appendChild(div);
+      });
+    }
+
+    function initCounters(){
+      const counters = document.querySelectorAll('.counter');
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+          const el = entry.target;
+          const target = parseFloat(el.dataset.target);
+          const duration = 1200;
+          const start = performance.now();
+          function step(now){
+            const progress = Math.min((now - start) / duration, 1);
+            const current = target * (1 - Math.pow(1 - progress, 3));
+            el.textContent = current.toFixed(0);
+            if(progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          io.unobserve(el);
+        });
+      }, { threshold: .35 });
+      counters.forEach(counter => io.observe(counter));
+    }
+
+    function initLightbox(){
+      const lightbox = document.getElementById('lightbox');
+      const image = document.getElementById('lightboxImage');
+      const close = document.getElementById('lightboxClose');
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+          image.src = item.dataset.image;
+          image.alt = item.dataset.title || '查看大图';
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden', 'false');
+        });
+      });
+      function hide(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+      }
+      close.addEventListener('click', hide);
+      lightbox.addEventListener('click', (e) => {
+        if(e.target === lightbox) hide();
+      });
+      window.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') hide();
+      });
+    }
+
+    createTabs();
+    renderResult();
+    initCounters();
+    initLightbox();
+  </script>
+</body>
+</html>
